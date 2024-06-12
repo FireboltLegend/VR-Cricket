@@ -40,44 +40,59 @@ public class CricketBat : MonoBehaviour
             Debug.Log("Wicket Down");
             wickets++;
             wicketDown = false;
+            ball.GetComponent<CricketBall>().gameRunning = false;
         }
         else
         {
-            if(ballDistance > 25)
+            if(ball.GetComponent<CricketBall>().boundary && !ball.GetComponent<CricketBall>().field)
             {
                 Debug.Log("Ball Hit for 6 runs");
                 runs += 6;
                 ballDistance = 0;
+                ball.GetComponent<CricketBall>().gameRunning = false;
+                ball.GetComponent<CricketBall>().boundary = false;
+                ball.GetComponent<CricketBall>().field = false;
+                ballHit = false;
             }
-            else if(ballDistance > 20)
+            else if(ball.GetComponent<CricketBall>().boundary && ball.GetComponent<CricketBall>().field)
             {
                 Debug.Log("Ball Hit for 4 runs");
                 runs += 4;
                 ballDistance = 0;
+                ball.GetComponent<CricketBall>().gameRunning = false;
+                ball.GetComponent<CricketBall>().field = false;
             }
-            else if(ballDistance > 15)
+            else if(ballDistance > 20 && ball.GetComponent<Rigidbody>().velocity.magnitude <= 0.5f)
             {
                 Debug.Log("Ball Hit for 3 runs");
                 runs += 3;
                 ballDistance = 0;
+                ball.GetComponent<CricketBall>().gameRunning = false;
+                ball.GetComponent<CricketBall>().field = false;
             }
-            else if(ballDistance > 10)
+            else if(ballDistance > 15 && ball.GetComponent<Rigidbody>().velocity.magnitude <= 0.5f)
             {
                 Debug.Log("Ball Hit for 2 runs");
                 runs += 2;
                 ballDistance = 0;
+                ball.GetComponent<CricketBall>().gameRunning = false;
+                ball.GetComponent<CricketBall>().field = false;
             }
-            else if(ballDistance > 5)
+            else if(ballDistance > 10 && ball.GetComponent<Rigidbody>().velocity.magnitude <= 0.5f)
             {
                 Debug.Log("Ball Hit for 1 run");
                 runs += 1;
                 ballDistance = 0;
+                ball.GetComponent<CricketBall>().gameRunning = false;
+                ball.GetComponent<CricketBall>().field = false;
             }
-            else if(ballDistance > 0)
+            else if(ballDistance > 0 && ball.GetComponent<Rigidbody>().velocity.magnitude <= 0.5f)
             {
                 Debug.Log("Ball Hit for 0 runs");
                 runs += 0;
                 ballDistance = 0;
+                ball.GetComponent<CricketBall>().gameRunning = false;
+                ball.GetComponent<CricketBall>().field = false;
             }
         }
         Text.text = "Runs: " + runs + "\nWickets: " + wickets;
@@ -91,6 +106,8 @@ public class CricketBat : MonoBehaviour
             Debug.Log("Ball Hit\nSwing Speed: " + swingSpeed + "\nSwing Direction: " + swingDirection.normalized);
             ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
             ball.GetComponent<Rigidbody>().AddForce(swingDirection.normalized * swingSpeed, ForceMode.Impulse);
+            ball.GetComponent<LineRenderer>().positionCount = 1;
+            ball.GetComponent<LineRenderer>().SetPosition(0, ball.transform.position);
         }
     }
 }
