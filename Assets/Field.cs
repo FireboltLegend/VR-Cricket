@@ -21,14 +21,12 @@ public class Field : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(bat.GetComponent<CricketBat>().ballHit == true && ball.GetComponent<CricketBall>().gameRunning)
+        if(bat.GetComponent<CricketBat>().ballHit == true)
         {
             if(other.gameObject == ball)
             {
-                bat.GetComponent<CricketBat>().ballHit = false;
                 ball.GetComponent<CricketBall>().field = true;
                 Debug.Log("Ball Lands");
-                bat.GetComponent<CricketBat>().ballDistance = Vector3.Distance(ball.transform.position, bat.transform.position);
             }
         }
     }

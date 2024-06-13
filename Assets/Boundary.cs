@@ -20,11 +20,12 @@ public class Boundary : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject == ball && ball.GetComponent<CricketBall>().gameRunning)
+        if(other.gameObject == ball && bat.GetComponent<CricketBat>().ballHit == true)
         {
+            bat.GetComponent<CricketBat>().ballHit = false;
             Debug.Log("Boundary");
             ball.GetComponent<CricketBall>().boundary = true;
-            other.gameObject.GetComponent<CricketBall>().gameRunning = false;
+            bat.GetComponent<CricketBat>().makeDecision = true;
         }
     }
 }

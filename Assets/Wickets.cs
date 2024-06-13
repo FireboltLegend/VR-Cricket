@@ -24,11 +24,13 @@ public class Wickets : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject == ball && ball.GetComponent<CricketBall>().gameRunning)
+        if(other.gameObject == ball && bat.GetComponent<CricketBat>().wicketDown == false && ball.GetComponent<CricketBall>().gameRunning == true)
         {
+            ball.GetComponent<CricketBall>().gameRunning = false;
             Debug.Log("Wicket Down");
             GetComponentInParent<Outline>().enabled = true;
             bat.GetComponent<CricketBat>().wicketDown = true;
+            bat.GetComponent<CricketBat>().makeDecision = true;
         }
     }
 }
