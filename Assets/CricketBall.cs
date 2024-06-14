@@ -10,6 +10,7 @@ public class CricketBall : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI result;
 	[SerializeField] float lowerBoundBallLaunchSpeed;
 	[SerializeField] float upperBoundBallLaunchSpeed;
+	[SerializeField] private Vector3 ballLaunchDirection;
 	[SerializeField] private GameObject bowlerHand;
 	Vector3 prevPosition;
     Vector3 curPosition;
@@ -31,17 +32,21 @@ public class CricketBall : MonoBehaviour
 	{
 		prevPosition = curPosition;
         curPosition = transform.position;
-		if(Vector3.Distance(new Vector3(5.41190004f, 1.95720005f, -0.310400009f), bowlerHand.transform.position) < 0.2f)
+		if(Input.GetKeyDown(KeyCode.Space))
 		{
 			result.text = "";
 			gameRunning = true;
 			boundary = false;
 			field = false;
+			GetComponent<Rigidbody>().useGravity = true;
+			GetComponent<LineRenderer>().positionCount = 0;
+		}
+		if(Vector3.Distance(new Vector3(5.41190004f, 1.95720005f, -0.310400009f), bowlerHand.transform.position) < 0.2f)
+		{
 			rb.velocity = Vector3.zero;
 			ballLaunchSpeed = Random.Range(lowerBoundBallLaunchSpeed, upperBoundBallLaunchSpeed);
 			transform.position = new Vector3(5.41190004f, 1.95720005f, -0.310400009f);
-			rb.AddForce((Vector3.forward + new Vector3(-1, 0, -0.975f)) * ballLaunchSpeed, ForceMode.Impulse);
-			GetComponent<LineRenderer>().positionCount = 0;
+			rb.AddForce((Vector3.forward + ballLaunchDirection) * ballLaunchSpeed, ForceMode.Impulse);
 		}
 		if(GetComponent<LineRenderer>().positionCount >= 1)
 		{
