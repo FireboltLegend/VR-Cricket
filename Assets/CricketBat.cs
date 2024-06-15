@@ -19,6 +19,8 @@ public class CricketBat : MonoBehaviour
     public float ballDistance = 0f;
     public bool wicketDown = false;
     public bool makeDecision = false;
+    public bool catchBall = false;
+    public bool ballCaught = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -117,6 +119,7 @@ public class CricketBat : MonoBehaviour
         {
             ball.GetComponent<CricketBall>().gameRunning = false;
             ballHit = true;
+            catchBall = true;
             GetComponent<AudioSource>().Play();
             Debug.Log("Ball Hit\nSwing Speed: " + swingSpeed + "\nSwing Direction: " + swingDirection.normalized);
             ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
