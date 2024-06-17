@@ -19,6 +19,7 @@ public class CricketBall : MonoBehaviour
 	public bool gameRunning = false;
 	public bool field = false;
 	public bool boundary = false;
+	public bool ballThrown = false;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -47,6 +48,7 @@ public class CricketBall : MonoBehaviour
 			ballLaunchSpeed = Random.Range(lowerBoundBallLaunchSpeed, upperBoundBallLaunchSpeed);
 			transform.position = new Vector3(5.41190004f, 1.95720005f, -0.310400009f);
 			rb.AddForce((Vector3.forward + ballLaunchDirection) * ballLaunchSpeed, ForceMode.Impulse);
+			ballThrown = true;
 		}
 		if(GetComponent<LineRenderer>().positionCount >= 1)
 		{

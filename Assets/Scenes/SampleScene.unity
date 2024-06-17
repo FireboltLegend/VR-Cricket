@@ -158,11 +158,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &60888198
 MeshRenderer:
@@ -243,6 +243,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1424922984}
   ball: {fileID: 2008385045}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
 --- !u!1 &86811354
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,11 +280,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &86811356
 MeshRenderer:
@@ -363,6 +365,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1424922984}
   ball: {fileID: 2008385045}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
 --- !u!1 &120285997
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,11 +402,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &120285999
 MeshRenderer:
@@ -483,6 +487,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1424922984}
   ball: {fileID: 2008385045}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
 --- !u!1 &138665923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7795509644606241549, guid: 4b92fde6207a22c42a75600f759f89c3, type: 3}
@@ -668,11 +674,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &326133946
 MeshRenderer:
@@ -753,6 +759,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1424922984}
   ball: {fileID: 2008385045}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
 --- !u!1001 &357104288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -915,11 +923,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &450984902
 MeshRenderer:
@@ -1000,6 +1008,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1424922984}
   ball: {fileID: 2008385045}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
 --- !u!1 &452027109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,8 +1384,8 @@ GameObject:
   - component: {fileID: 789219560}
   - component: {fileID: 789219559}
   - component: {fileID: 789219558}
-  - component: {fileID: 789219561}
   - component: {fileID: 789219562}
+  - component: {fileID: 789219563}
   m_Layer: 0
   m_Name: Outfield
   m_TagString: Untagged
@@ -1442,33 +1452,12 @@ Transform:
   m_GameObject: {fileID: 789219556}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 0.01, z: 45}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalScale: {x: 50, y: 10, z: 45}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &789219561
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 789219556}
-  m_Material: {fileID: 13400000, guid: 91ef38658d550474d94738c306f37379, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0000001, y: 20, z: 1.0000002}
-  m_Center: {x: 0, y: 5, z: 0}
 --- !u!114 &789219562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1483,6 +1472,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 2008385045}
   bat: {fileID: 1424922984}
+--- !u!65 &789219563
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789219556}
+  m_Material: {fileID: 13400000, guid: 91ef38658d550474d94738c306f37379, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000001, y: 2.01, z: 1.0000001}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &798961682
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,6 +1634,7 @@ GameObject:
   - component: {fileID: 924252772}
   - component: {fileID: 924252771}
   - component: {fileID: 924252770}
+  - component: {fileID: 924252773}
   m_Layer: 0
   m_Name: Pitch
   m_TagString: Untagged
@@ -1696,6 +1707,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &924252773
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924252769}
+  m_Material: {fileID: 13400000, guid: 91ef38658d550474d94738c306f37379, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000001, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &945912152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,11 +1974,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1062549145
 MeshRenderer:
@@ -2027,6 +2059,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1424922984}
   ball: {fileID: 2008385045}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
 --- !u!1 &1077970923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7795509644606241549, guid: 4b92fde6207a22c42a75600f759f89c3, type: 3}
@@ -2204,7 +2238,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: -1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1262752015
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2264,8 +2298,8 @@ Transform:
   m_GameObject: {fileID: 1262752013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
-  m_LocalScale: {x: 1000, y: 0.01, z: 1000}
+  m_LocalPosition: {x: 0, y: -5.05, z: 0}
+  m_LocalScale: {x: 1000, y: 10, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2319,11 +2353,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1265917336
 MeshRenderer:
@@ -2404,6 +2438,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1424922984}
   ball: {fileID: 2008385045}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
 --- !u!1 &1304512231
 GameObject:
   m_ObjectHideFlags: 0
@@ -2487,6 +2523,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1359550589 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7192818547691322728, guid: f39a9d103c4129b42a53567f6cd8356a, type: 3}
+  m_PrefabInstance: {fileID: 1405253954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1383008960
 GameObject:
   m_ObjectHideFlags: 0
@@ -2570,6 +2611,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1386267937 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5550776016039436609, guid: f39a9d103c4129b42a53567f6cd8356a, type: 3}
+  m_PrefabInstance: {fileID: 1405253954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1405253954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2604,7 +2650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5550776016039436608, guid: f39a9d103c4129b42a53567f6cd8356a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.346
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5550776016039436608, guid: f39a9d103c4129b42a53567f6cd8356a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2830,12 +2876,18 @@ MonoBehaviour:
   ball: {fileID: 2008385045}
   score: {fileID: 482488590}
   result: {fileID: 998678417}
+  player: {fileID: 1386267937}
+  playerCamera: {fileID: 1359550589}
   swingSpeed: 0
   swingDirection: {x: 0, y: 0, z: 0}
   ballHit: 0
   ballDistance: 0
   wicketDown: 0
   makeDecision: 0
+  catchBall: 0
+  ballCaught: 0
+  ballStopped: 0
+  ballAtWicket: 0
 --- !u!64 &1424922986
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3272,11 +3324,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1677410389
 MeshRenderer:
@@ -3357,6 +3409,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bat: {fileID: 1424922984}
   ball: {fileID: 2008385045}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
 --- !u!1001 &1702033107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3879,6 +3933,7 @@ MonoBehaviour:
   gameRunning: 0
   field: 0
   boundary: 0
+  ballThrown: 0
 --- !u!54 &2008385047
 Rigidbody:
   m_ObjectHideFlags: 0

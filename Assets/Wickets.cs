@@ -24,7 +24,7 @@ public class Wickets : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject == ball && bat.GetComponent<CricketBat>().wicketDown == false && ball.GetComponent<CricketBall>().gameRunning == true)
+        if(other.gameObject == ball && bat.GetComponent<CricketBat>().wicketDown == false && ball.GetComponent<CricketBall>().ballThrown == true)
         {
             ball.GetComponent<CricketBall>().gameRunning = false;
             Debug.Log("Wicket Down");

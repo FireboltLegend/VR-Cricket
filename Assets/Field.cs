@@ -26,6 +26,7 @@ public class Field : MonoBehaviour
             if(other.gameObject == ball)
             {
                 ball.GetComponent<CricketBall>().field = true;
+                bat.GetComponent<CricketBat>().catchBall = false;
                 Debug.Log("Ball Lands");
             }
         }

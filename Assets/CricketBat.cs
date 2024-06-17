@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CricketBat : MonoBehaviour
@@ -8,6 +10,8 @@ public class CricketBat : MonoBehaviour
     [SerializeField] private GameObject ball;
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI result;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerCamera;
     int runs = 0;
     int wickets = 0;
     public float swingSpeed = 0f;
@@ -21,17 +25,41 @@ public class CricketBat : MonoBehaviour
     public bool makeDecision = false;
     public bool catchBall = false;
     public bool ballCaught = false;
+    public bool ballStopped = false;
+    private bool canRun = false;
+    private Vector3 playerStartPosition;
+    private Vector3 batStartPosition;
+    private Vector3 batStartRotation;
+    public bool ballAtWicket = false;
+    private int potentialRuns = 0;
+    private int runStartLocation = 0;
+    private bool runStart = false;
+    private bool runEnd = false;
     // Start is called before the first frame update
     void Start()
     {
         prevPosition = transform.position;
         curPosition = transform.position;
         rb = GetComponent<Rigidbody>();
+        playerStartPosition = player.transform.position;
+        batStartPosition = transform.position;
+        batStartRotation = transform.rotation.eulerAngles;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            canRun = false;
+            ballAtWicket = false;
+            runStartLocation = 0;
+            runStart = false;
+            runEnd = false;
+            player.transform.position = playerStartPosition;
+            transform.position = batStartPosition;
+            transform.rotation = Quaternion.Euler(batStartRotation);
+        }
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
@@ -39,6 +67,73 @@ public class CricketBat : MonoBehaviour
         curPosition = transform.position;
         swingSpeed = Vector3.Distance(curPosition, prevPosition) / Time.deltaTime;
         swingDirection = curPosition - prevPosition;
+        if(canRun)
+        {
+            if(swingSpeed > 0 && Math.Abs(player.transform.position.x) <= 6)
+            {
+                if(playerCamera.transform.rotation.eulerAngles.y > 0 && playerCamera.transform.rotation.eulerAngles.y < 180)
+                {
+                    if(!runStart && runStartLocation == 0)
+                    {
+                        runEnd = false;
+                        runStart = true;
+                    }
+                    player.transform.position = Vector3.MoveTowards(player.transform.position, new Vector3(6, player.transform.position.y, player.transform.position.z), 0.0075f * swingSpeed);
+                    if(player.transform.position.x >= 4 && !runEnd && runStartLocation == 0)
+                    {
+                        runEnd = true;
+                        runStartLocation = 1;
+                        potentialRuns++;
+                        runStart = false;
+                    }
+                    else if(player.transform.position.x >= 4 && runStart && runStartLocation == 1)
+                    {
+                        runEnd = true;
+                        runStart = false;
+                        ballAtWicket = true;
+                    }
+                }
+                else
+                {
+                    if(!runStart && runStartLocation == 1)
+                    {
+                        runEnd = false;
+                        runStart = true;
+                    }
+                    player.transform.position = Vector3.MoveTowards(player.transform.position, new Vector3(-6, player.transform.position.y, player.transform.position.z), 0.0075f * swingSpeed);
+                    if(player.transform.position.x <= -4 && !runEnd && runStartLocation == 1)
+                    {
+                        runEnd = true;
+                        runStartLocation = 0;
+                        potentialRuns++;
+                        runStart = false;
+                    }
+                    else if(player.transform.position.x <= -4 && runStart && runStartLocation == 0)
+                    {
+                        runEnd = true;
+                        runStart = false;
+                        ballAtWicket = true;
+                    }
+                }
+                if(ballAtWicket)
+                {
+                    if(Math.Abs(player.transform.position.x) < 4)
+                    {
+                        wicketDown = true;
+                        ballAtWicket = false;
+                        canRun = false;
+                        makeDecision = true;
+                    }
+                    else
+                    {
+                        runs += potentialRuns;
+                        result.text = potentialRuns + " Runs";
+                        player.transform.position = playerStartPosition;
+                        transform.position = batStartPosition;
+                    }
+                }
+            }
+        }
         if(makeDecision)
         {
             if(wicketDown)
@@ -47,6 +142,9 @@ public class CricketBat : MonoBehaviour
                 wickets++;
                 wicketDown = false;
                 result.text = "Wicket Down";
+                canRun = false;
+                player.transform.position = playerStartPosition;
+                transform.position = batStartPosition;
             }
             else
             {
@@ -55,58 +153,56 @@ public class CricketBat : MonoBehaviour
                     Debug.Log("Ball Hit for 6 runs");
                     runs += 6;
                     ballDistance = 0;
-                    ball.GetComponent<CricketBall>().gameRunning = false;
                     ball.GetComponent<CricketBall>().boundary = false;
                     ball.GetComponent<CricketBall>().field = false;
                     ballHit = false;
                     result.text = "6 Runs";
+                    player.transform.position = playerStartPosition;
+                    transform.position = batStartPosition;
                 }
                 else if(ball.GetComponent<CricketBall>().boundary && ball.GetComponent<CricketBall>().field)
                 {
                     Debug.Log("Ball Hit for 4 runs");
                     runs += 4;
                     ballDistance = 0;
-                    ball.GetComponent<CricketBall>().gameRunning = false;
                     ball.GetComponent<CricketBall>().field = false;
                     ball.GetComponent<CricketBall>().boundary = false;
                     result.text = "4 Runs";
+                    player.transform.position = playerStartPosition;
+                    transform.position = batStartPosition;
                 }
-                else if(ballDistance > 20)
-                {
-                    Debug.Log("Ball Hit for 3 runs");
-                    runs += 3;
-                    ballDistance = 0;
-                    ball.GetComponent<CricketBall>().gameRunning = false;
-                    ball.GetComponent<CricketBall>().field = false;
-                    result.text = "3 Runs";
-                }
-                else if(ballDistance > 15)
-                {
-                    Debug.Log("Ball Hit for 2 runs");
-                    runs += 2;
-                    ballDistance = 0;
-                    ball.GetComponent<CricketBall>().gameRunning = false;
-                    ball.GetComponent<CricketBall>().field = false;
-                    result.text = "2 Runs";
-                }
-                else if(ballDistance > 10)
-                {
-                    Debug.Log("Ball Hit for 1 run");
-                    runs += 1;
-                    ballDistance = 0;
-                    ball.GetComponent<CricketBall>().gameRunning = false;
-                    ball.GetComponent<CricketBall>().field = false;
-                    result.text = "1 Run";
-                }
-                else if(ballDistance > 0)
-                {
-                    Debug.Log("Ball Hit for 0 runs");
-                    runs += 0;
-                    ballDistance = 0;
-                    ball.GetComponent<CricketBall>().gameRunning = false;
-                    ball.GetComponent<CricketBall>().field = false;
-                    result.text = "Dot Ball";
-                }
+                // else if(ballDistance > 20)
+                // {
+                //     Debug.Log("Ball Hit for 3 runs");
+                //     runs += 3;
+                //     ballDistance = 0;
+                //     ball.GetComponent<CricketBall>().field = false;
+                //     result.text = "3 Runs";
+                // }
+                // else if(ballDistance > 15)
+                // {
+                //     Debug.Log("Ball Hit for 2 runs");
+                //     runs += 2;
+                //     ballDistance = 0;
+                //     ball.GetComponent<CricketBall>().field = false;
+                //     result.text = "2 Runs";
+                // }
+                // else if(ballDistance > 10)
+                // {
+                //     Debug.Log("Ball Hit for 1 run");
+                //     runs += 1;
+                //     ballDistance = 0;
+                //     ball.GetComponent<CricketBall>().field = false;
+                //     result.text = "1 Run";
+                // }
+                // else if(ballDistance > 0)
+                // {
+                //     Debug.Log("Ball Hit for 0 runs");
+                //     runs += 0;
+                //     ballDistance = 0;
+                //     ball.GetComponent<CricketBall>().field = false;
+                //     result.text = "Dot Ball";
+                // }
             }
             makeDecision = false;
         }
@@ -115,10 +211,11 @@ public class CricketBat : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject == ball && ball.GetComponent<CricketBall>().gameRunning)
+        if(other.gameObject == ball && ball.GetComponent<CricketBall>().gameRunning && ball.GetComponent<CricketBall>().ballThrown)
         {
-            ball.GetComponent<CricketBall>().gameRunning = false;
+            ball.GetComponent<CricketBall>().ballThrown = false;
             ballHit = true;
+            canRun = true;
             catchBall = true;
             GetComponent<AudioSource>().Play();
             Debug.Log("Ball Hit\nSwing Speed: " + swingSpeed + "\nSwing Direction: " + swingDirection.normalized);
