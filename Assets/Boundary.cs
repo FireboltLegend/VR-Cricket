@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,7 @@ public class Boundary : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject == ball && bat.GetComponent<CricketBat>().ballHit == true)
+        if(other.gameObject == ball && bat.GetComponent<CricketBat>().ballHit == true && (MathF.Pow(ball.transform.position.x, 2)/MathF.Pow(25, 2) + MathF.Pow(ball.transform.position.z, 2)/MathF.Pow(22.5f, 2)) > 1)
         {
             bat.GetComponent<CricketBat>().ballHit = false;
             Debug.Log("Boundary");

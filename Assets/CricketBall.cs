@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -46,7 +47,7 @@ public class CricketBall : MonoBehaviour
 		if(Vector3.Distance(new Vector3(5.41190004f, 1.95720005f, -0.310400009f), bowlerHand.transform.position) < 0.2f)
 		{
 			rb.velocity = Vector3.zero;
-			ballLaunchSpeed = Random.Range(lowerBoundBallLaunchSpeed, upperBoundBallLaunchSpeed);
+			ballLaunchSpeed = UnityEngine.Random.Range(lowerBoundBallLaunchSpeed, upperBoundBallLaunchSpeed);
 			transform.position = new Vector3(5.41190004f, 1.95720005f, -0.310400009f);
 			rb.AddForce((Vector3.forward + ballLaunchDirection) * ballLaunchSpeed, ForceMode.Impulse);
 			ballThrown = true;
@@ -56,17 +57,18 @@ public class CricketBall : MonoBehaviour
 			GetComponent<LineRenderer>().positionCount += 1;
 			GetComponent<LineRenderer>().SetPosition(GetComponent<LineRenderer>().positionCount - 1, transform.position);
 		}
-		if(transform.position.y < -1 && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(outfield.transform.position.x, outfield.transform.position.z)) < 25f)
+		if(transform.position.y < -1 && (MathF.Pow(transform.position.x, 2)/MathF.Pow(25, 2) + MathF.Pow(transform.position.z, 2)/MathF.Pow(22.5f, 2)) <= 1)
 		{
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
 			transform.position = new Vector3(transform.position.x, 0.078f, transform.position.z);
 			field = true;
 		}
-		else if (transform.position.y < -1 && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(outfield.transform.position.x, outfield.transform.position.z)) >= 25f)
+		else if (transform.position.y < -1 && (MathF.Pow(transform.position.x, 2)/MathF.Pow(25, 2) + MathF.Pow(transform.position.z, 2)/MathF.Pow(22.5f, 2)) > 1)
 		{
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
 			transform.position = new Vector3(transform.position.x, 0.078f, transform.position.z);
 			boundary = true;
+			bat.GetComponent<CricketBat>().makeDecision = true;
 		}
 	}
 }
