@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,12 +28,12 @@ public class Fielders : MonoBehaviour
             bat.GetComponent<CricketBat>().ballCaught = false;
             bat.GetComponent<CricketBat>().ballStopped = false;
         }
-        if(bat.GetComponent<CricketBat>().catchBall == true && bat.GetComponent<CricketBat>().ballCaught == false)
+        if(bat.GetComponent<CricketBat>().catchBall == true && bat.GetComponent<CricketBat>().ballCaught == false && (MathF.Pow(ball.transform.position.x, 2)/MathF.Pow(25, 2) + MathF.Pow(ball.transform.position.z, 2)/MathF.Pow(22.5f, 2)) <= 1)
         {
             Debug.Log("Fielder Running to Catch the Ball");
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(ball.transform.position.x, transform.position.y, ball.transform.position.z), 0.05f);
         }
-        else if (ball.GetComponent<CricketBall>().field && bat.GetComponent<CricketBat>().ballStopped == false)
+        else if (ball.GetComponent<CricketBall>().field && bat.GetComponent<CricketBat>().ballStopped == false && (MathF.Pow(ball.transform.position.x, 2)/MathF.Pow(25, 2) + MathF.Pow(ball.transform.position.z, 2)/MathF.Pow(22.5f, 2)) <= 1)
         {
             Debug.Log("Fielder Running to Stop the Ball");
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(ball.transform.position.x, transform.position.y, ball.transform.position.z), 0.05f);

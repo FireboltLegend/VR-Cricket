@@ -12,6 +12,8 @@ public class CricketBat : MonoBehaviour
     [SerializeField] private TextMeshProUGUI result;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject playerCamera;
+    [SerializeField] private GameObject wicket;
+    [SerializeField] private GameObject otherWicket;
     int runs = 0;
     int wickets = 0;
     public float swingSpeed = 0f;
@@ -51,11 +53,15 @@ public class CricketBat : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            potentialRuns = 0;
             canRun = false;
             ballAtWicket = false;
             runStartLocation = 0;
             runStart = false;
             runEnd = false;
+            wicketDown = false;
+            catchBall = false;
+            makeDecision = false;
             player.transform.position = playerStartPosition;
             transform.position = batStartPosition;
             transform.rotation = Quaternion.Euler(batStartRotation);
@@ -123,18 +129,22 @@ public class CricketBat : MonoBehaviour
                         ballAtWicket = false;
                         canRun = false;
                         makeDecision = true;
+                        wicket.GetComponent<Outline>().enabled = true;
+                        otherWicket.GetComponent<Outline>().enabled = true;
                     }
                     else
                     {
+                        canRun = false;
                         runs += potentialRuns;
                         result.text = potentialRuns + " Runs";
                         player.transform.position = playerStartPosition;
                         transform.position = batStartPosition;
+                        makeDecision = true;
                     }
                 }
             }
         }
-        if(makeDecision)
+        if(makeDecision && ball.GetComponent<CricketBall>().gameRunning)
         {
             if(wicketDown)
             {
@@ -146,9 +156,9 @@ public class CricketBat : MonoBehaviour
                 player.transform.position = playerStartPosition;
                 transform.position = batStartPosition;
             }
-            else
+            else if(ball.GetComponent<CricketBall>().boundary)
             {
-                if(ball.GetComponent<CricketBall>().boundary && !ball.GetComponent<CricketBall>().field)
+                if(!ball.GetComponent<CricketBall>().field)
                 {
                     Debug.Log("Ball Hit for 6 runs");
                     runs += 6;
@@ -160,7 +170,7 @@ public class CricketBat : MonoBehaviour
                     player.transform.position = playerStartPosition;
                     transform.position = batStartPosition;
                 }
-                else if(ball.GetComponent<CricketBall>().boundary && ball.GetComponent<CricketBall>().field)
+                else if(ball.GetComponent<CricketBall>().field)
                 {
                     Debug.Log("Ball Hit for 4 runs");
                     runs += 4;
@@ -171,40 +181,12 @@ public class CricketBat : MonoBehaviour
                     player.transform.position = playerStartPosition;
                     transform.position = batStartPosition;
                 }
-                // else if(ballDistance > 20)
-                // {
-                //     Debug.Log("Ball Hit for 3 runs");
-                //     runs += 3;
-                //     ballDistance = 0;
-                //     ball.GetComponent<CricketBall>().field = false;
-                //     result.text = "3 Runs";
-                // }
-                // else if(ballDistance > 15)
-                // {
-                //     Debug.Log("Ball Hit for 2 runs");
-                //     runs += 2;
-                //     ballDistance = 0;
-                //     ball.GetComponent<CricketBall>().field = false;
-                //     result.text = "2 Runs";
-                // }
-                // else if(ballDistance > 10)
-                // {
-                //     Debug.Log("Ball Hit for 1 run");
-                //     runs += 1;
-                //     ballDistance = 0;
-                //     ball.GetComponent<CricketBall>().field = false;
-                //     result.text = "1 Run";
-                // }
-                // else if(ballDistance > 0)
-                // {
-                //     Debug.Log("Ball Hit for 0 runs");
-                //     runs += 0;
-                //     ballDistance = 0;
-                //     ball.GetComponent<CricketBall>().field = false;
-                //     result.text = "Dot Ball";
-                // }
             }
             makeDecision = false;
+            ball.GetComponent<CricketBall>().gameRunning = false;
+            player.transform.position = playerStartPosition;
+            transform.position = batStartPosition;
+            canRun = false;
         }
         score.text = "Runs: " + runs + "\nWickets: " + wickets;
     }

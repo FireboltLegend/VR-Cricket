@@ -39,6 +39,7 @@ public class CricketBall : MonoBehaviour
 			gameRunning = true;
 			boundary = false;
 			field = false;
+			ballThrown = false;
 			GetComponent<Rigidbody>().useGravity = true;
 			GetComponent<LineRenderer>().positionCount = 0;
 		}
@@ -55,24 +56,17 @@ public class CricketBall : MonoBehaviour
 			GetComponent<LineRenderer>().positionCount += 1;
 			GetComponent<LineRenderer>().SetPosition(GetComponent<LineRenderer>().positionCount - 1, transform.position);
 		}
-		if(transform.position.y < -1 && Vector3.Distance(transform.position, outfield.transform.position) < 25f)
+		if(transform.position.y < -1 && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(outfield.transform.position.x, outfield.transform.position.z)) < 25f)
 		{
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
 			transform.position = new Vector3(transform.position.x, 0.078f, transform.position.z);
 			field = true;
 		}
-		else if (transform.position.y < -1 && Vector3.Distance(transform.position, outfield.transform.position) >= 25f)
+		else if (transform.position.y < -1 && Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(outfield.transform.position.x, outfield.transform.position.z)) >= 25f)
 		{
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
 			transform.position = new Vector3(transform.position.x, 0.078f, transform.position.z);
 			boundary = true;
-		}
-		if(Vector3.Distance(curPosition, prevPosition) < 1f && bat.GetComponent<CricketBat>().ballHit == true && field == true)
-		{
-			bat.GetComponent<CricketBat>().ballHit = false;
-			bat.GetComponent<CricketBat>().ballDistance = Vector3.Distance(transform.position, bat.transform.position);
-			bat.GetComponent<CricketBat>().makeDecision = true;
-			Debug.Log("Ball Stopped");
 		}
 	}
 }

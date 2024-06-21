@@ -2878,6 +2878,8 @@ MonoBehaviour:
   result: {fileID: 998678417}
   player: {fileID: 1386267937}
   playerCamera: {fileID: 1359550589}
+  wicket: {fileID: 290557242}
+  otherWicket: {fileID: 1723983417}
   swingSpeed: 0
   swingDirection: {x: 0, y: 0, z: 0}
   ballHit: 0
