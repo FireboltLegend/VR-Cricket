@@ -14,6 +14,7 @@ public class CricketBat : MonoBehaviour
     [SerializeField] private GameObject playerCamera;
     [SerializeField] private GameObject wicket;
     [SerializeField] private GameObject otherWicket;
+    [SerializeField] private GameObject outfield;
     int runs = 0;
     int wickets = 0;
     public float swingSpeed = 0f;
@@ -37,6 +38,9 @@ public class CricketBat : MonoBehaviour
     private int runStartLocation = 0;
     private bool runStart = false;
     private bool runEnd = false;
+    private bool restartGame = false;
+    private bool halfCentury = false;
+    private bool century = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +69,14 @@ public class CricketBat : MonoBehaviour
             player.transform.position = playerStartPosition;
             transform.position = batStartPosition;
             transform.rotation = Quaternion.Euler(batStartRotation);
+            if(restartGame)
+            {
+                restartGame = false;
+                runs = 0;
+                wickets = 0;
+            }
+            outfield.GetComponent<AudioSource>().Stop();
+            wicket.GetComponent<AudioSource>().Stop();
         }
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
@@ -169,6 +181,7 @@ public class CricketBat : MonoBehaviour
                     result.text = "6 Runs";
                     player.transform.position = playerStartPosition;
                     transform.position = batStartPosition;
+                    outfield.GetComponent<AudioSource>().Play();
                 }
                 else if(ball.GetComponent<CricketBall>().field)
                 {
@@ -180,6 +193,7 @@ public class CricketBat : MonoBehaviour
                     result.text = "4 Runs";
                     player.transform.position = playerStartPosition;
                     transform.position = batStartPosition;
+                    outfield.GetComponent<AudioSource>().Play();
                 }
             }
             makeDecision = false;
@@ -189,6 +203,24 @@ public class CricketBat : MonoBehaviour
             canRun = false;
         }
         score.text = "Runs: " + runs + "\nWickets: " + wickets;
+        if(wickets == 10)
+        {
+            result.text = "Game Over!";
+            restartGame = true;
+            wicket.GetComponent<AudioSource>().Play();
+        }
+        else if(runs >= 50 && halfCentury == false)
+        {
+            halfCentury = true;
+            result.text = "Half Century!";
+            outfield.GetComponent<AudioSource>().Play();
+        }
+        else if(runs >= 100 && century == false)
+        {
+            century = true;
+            result.text = "Century!";
+            outfield.GetComponent<AudioSource>().Play();
+        }
     }
 
     void OnCollisionEnter(Collision other)

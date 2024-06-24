@@ -37,11 +37,13 @@ public class Fielders : MonoBehaviour
         {
             Debug.Log("Fielder Running to Stop the Ball");
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(ball.transform.position.x, transform.position.y, ball.transform.position.z), 0.05f);
+            transform.LookAt(ball.transform);
         }
         else if(transform.position != fielderPosition && !hasBall)
         {
             Debug.Log("Fielder Returning to Start Position");
             transform.position = Vector3.MoveTowards(transform.position, fielderPosition, 0.05f);
+            transform.LookAt(fielderPosition);
         }
         if(hasBall)
         {
@@ -49,11 +51,13 @@ public class Fielders : MonoBehaviour
             {
                 Debug.Log("Fielder Running to Wicket");
                 transform.position = Vector3.MoveTowards(transform.position, wicket.transform.position, 0.05f);
+                transform.LookAt(wicket.transform);
             }
             else
             {
                 Debug.Log("Fielder Running to Other Wicket");
                 transform.position = Vector3.MoveTowards(transform.position, otherWicket.transform.position, 0.05f);
+                transform.LookAt(otherWicket.transform);
             }
             ball.transform.position = transform.position;
             if(Vector3.Distance(transform.position, wicket.transform.position) < 0.2f || Vector3.Distance(transform.position, otherWicket.transform.position) < 0.2f)
