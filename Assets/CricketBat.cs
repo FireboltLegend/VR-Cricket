@@ -15,6 +15,7 @@ public class CricketBat : MonoBehaviour
     [SerializeField] private GameObject wicket;
     [SerializeField] private GameObject otherWicket;
     [SerializeField] private GameObject outfield;
+    [SerializeField] private GameObject outSound;
     int runs = 0;
     int wickets = 0;
     public float swingSpeed = 0f;
@@ -41,6 +42,7 @@ public class CricketBat : MonoBehaviour
     private bool restartGame = false;
     private bool halfCentury = false;
     private bool century = false;
+    private bool gameOver = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +77,7 @@ public class CricketBat : MonoBehaviour
                 runs = 0;
                 wickets = 0;
             }
+            gameOver = false;
             outfield.GetComponent<AudioSource>().Stop();
             wicket.GetComponent<AudioSource>().Stop();
         }
@@ -167,6 +170,7 @@ public class CricketBat : MonoBehaviour
                 canRun = false;
                 player.transform.position = playerStartPosition;
                 transform.position = batStartPosition;
+                outSound.GetComponent<AudioSource>().Play();
             }
             else if(ball.GetComponent<CricketBall>().boundary)
             {
@@ -203,10 +207,11 @@ public class CricketBat : MonoBehaviour
             canRun = false;
         }
         score.text = "Runs: " + runs + "\nWickets: " + wickets;
-        if(wickets == 10)
+        if(wickets == 10 && gameOver == false)
         {
             result.text = "Game Over!";
             restartGame = true;
+            gameOver = true;
             wicket.GetComponent<AudioSource>().Play();
         }
         else if(runs >= 50 && halfCentury == false)
