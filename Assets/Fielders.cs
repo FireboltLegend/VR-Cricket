@@ -9,6 +9,7 @@ public class Fielders : MonoBehaviour
     [SerializeField] private GameObject ball;
     [SerializeField] private GameObject wicket;
     [SerializeField] private GameObject otherWicket;
+    public bool launch = false;
     private Vector3 fielderPosition;
     private bool hasBall = false;
     // Start is called before the first frame update
@@ -20,8 +21,9 @@ public class Fielders : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) || launch == true)
         {
+            launch = false;
             transform.position = fielderPosition;
             hasBall = false;
             bat.GetComponent<CricketBat>().catchBall = false;

@@ -7,6 +7,7 @@ public class Wickets : MonoBehaviour
 {
     [SerializeField] private GameObject ball;
     [SerializeField] private GameObject bat;
+    public bool launch = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +17,9 @@ public class Wickets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) || launch == true)
         {
+            launch = false;
             GetComponentInParent<Outline>().enabled = false;
         }
     }

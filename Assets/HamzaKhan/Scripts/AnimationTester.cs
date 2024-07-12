@@ -18,6 +18,7 @@ namespace CricketBowlingAnimations
         [SerializeField] private BowlingAnimation bowlingAnimation;
 
         [SerializeField] private bool useRootMotion = true;
+        public bool launch = false;
 
         /// <summary>
         /// Bowling Animation Enum has all the possible bowling types.
@@ -62,8 +63,9 @@ namespace CricketBowlingAnimations
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Bowling"))
             {
                 // check if we get input for 'P'
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) || launch == true)
                 {
+                    launch = false;
                     // Reset the bowler to origin.
                     transform.position = originalPosition;
 

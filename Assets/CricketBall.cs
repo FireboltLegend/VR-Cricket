@@ -13,6 +13,7 @@ public class CricketBall : MonoBehaviour
 	[SerializeField] float upperBoundBallLaunchSpeed;
 	[SerializeField] private Vector3 ballLaunchDirection;
 	[SerializeField] private GameObject bowlerHand;
+	public bool launch = false;
 	Vector3 prevPosition;
     Vector3 curPosition;
 	public float ballLaunchSpeed;
@@ -34,8 +35,9 @@ public class CricketBall : MonoBehaviour
 	{
 		prevPosition = curPosition;
         curPosition = transform.position;
-		if(Input.GetKeyDown(KeyCode.Space))
+		if(Input.GetKeyDown(KeyCode.Space) || launch == true)
 		{
+			launch = false;
 			result.text = "";
 			gameRunning = true;
 			boundary = false;
@@ -68,6 +70,10 @@ public class CricketBall : MonoBehaviour
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
 			transform.position = new Vector3(transform.position.x, 0.078f, transform.position.z);
 			boundary = true;
+			bat.GetComponent<CricketBat>().makeDecision = true;
+		}
+		if(ballThrown && transform.position.x < -6 && bat.GetComponent<CricketBat>().wicketDown == false)
+		{
 			bat.GetComponent<CricketBat>().makeDecision = true;
 		}
 	}
